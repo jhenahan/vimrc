@@ -1,0 +1,75 @@
+" VAM Setup {
+    let g:vim_addon_manager = {'auto_install' : 1 }
+        " Set up VAM {
+            fun SetupVAM()
+                let vam_install_path = expand('$HOME') . '/.vim/vim-addons'
+                exec 'set rtp+='.vam_install_path.'/vim-addon-manager'
+                let g:vim_addon_manager = {'auto_install' : 1 }
+                if !isdirectory(vam_install_path.'/vim-addon-manager/autoload')
+                    execute '!git clone --depth=1 git://github.com/MarcWeber/vim-addon-manager '.shellescape(vam_install_path, 1).'/vim-addon-manager'
+                endif
+                call vam#ActivateAddons([], {'auto_install' : 1})
+            endfun
+            call SetupVAM()
+        " }
+    " }
+
+" Basic Addons {
+    call vam#ActivateAddons(['github:jnurmine/Zenburn'])    " zenburn colorscheme
+    call vam#ActivateAddons(['github:mw-utils'])            " cache file contents
+    call vam#ActivateAddons(['github:syntax-checker'])      " an apparently cleaner syntastic
+    call vam#ActivateAddons(['github:git'])                 " a little nicer than fugitive
+    if executable('ack-grep')
+        let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+        call vam#ActivateAddons(['mileszs/ack.vim'])
+    elseif executable('ack')
+        call vam#ActivateAddons(['mileszs/ack.vim'])
+    endif
+" }
+
+" Adds a little functionality for local addon activation {
+    if filereadable(expand('~/.vimrc.addons.local'))
+        source ~/.vimrc.addons.local
+    endif
+" }
+
+" Optional Addon Groups {
+    " To limit the addons used, list the groups you want to use in
+    " .vimrc.addons.local
+    if !exists(g:addon_groups)
+        let g:addon_groups=['general', " these should cover a majority of users
+                            'neocomplcache', " only a million times better than snipmate
+                            'programming', " a couple of nice tools for the enlightened programmer
+                            'haskell', " <3
+                            'latex', " \leq 3
+                            'js', " JS is the new JS
+                            'html', " High 5
+                            'ruby', " I've been meaning to learn
+                            'python', " poor man's programming
+                            'php' " broke man's programming
+                            ]
+    endif
+
+    " General use addons {
+        if count(g:addon_groups, 'general')
+            call vam#ActivateAddons(['github:scrooloose/nerdtree']) " popular, though I don't use it much
+            call vam#ActivateAddons(['surround']) " very convenient 
+            call vam#ActivateAddons(['AutoClose%1849']) " TODO: make AutoClose less aggressive with quotes in vim files
+            call vam#ActivateAddons(['ctrlp']) " preferable to Ctrl-T
+            call vam#ActivateAddons(['ctrlp-modified']) " not sure what this does, but we'll see
+            call vam#ActivateAddons(['matchit.zip']) " make % cool
+            call vam#ActivateAddons(['Powerline']) " Powerline is where it's at
+            call vam#ActivateAddons(['EasyMotion']) " make motion commands sexy again
+            call vam#ActivateAddons(['CSApprox']) " if for some reason Zenburn is not to your taste
+            call vam#ActivateAddons(['undotree']) " it's practically magic
+            call vam#ActivateAddons(['github:myusuf3/numbers.vim']) " never count lines again!
+            call vam#ActivateAddons(['Indent_Guides']) " don't count your tabs, either
+            call vam#ActivateAddons(['restore_view']) " save some lines and get a nice view restorer
+            call vam#ActivateAddons(['abolish']) " save your hands from the evils of English
+        endif
+    " }
+
+    " Snippet addons {
+        
+    " }
+" }

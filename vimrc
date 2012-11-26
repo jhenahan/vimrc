@@ -1,6 +1,4 @@
-" Modeline and Notes {
-" vim: set foldmarker={,} foldlevel=0 foldmethod=marker spell:
-"
+" Vim ASCII and authorship {
 "  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 "  .                                                                         .
 "  .                                                                         .
@@ -49,39 +47,6 @@
             set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
         endif
     " }
-
-    " VAM Setup {
-        " Check for VAM installation {
-            fun! EnsureVamIsOnDisk(vam_install_path)
-                let is_installed_c = "isdirectory(a:vam_install_path.'/vim-addon-manager/autoload')"
-                if eval(is_installed_c)
-                    return 1
-                else
-                    if 1 == confirm("Clone VAM into ".a:vam_install_path."?","&Y\n&N")
-                        call confirm("Remind yourself that most plugins ship with ".
-                                    \"documentation (README*, doc/*.txt). It is your ".
-                                    \"first source of knowledge. If you can't find ".
-                                    \"the info you're looking for in reasonable ".
-                                    \"time ask maintainers to improve documentation")
-                        call mkdir(a:vam_install_path, 'p')
-                        exec '!git clone --depth=1 git://github.com/MarcWeber/vim-addon-manager '.shellescape(a:vam_install_path, 1).'/vim-addon-manager'
-                        exec 'helptags '.fnameescape(a:vam_install_path.'/vim-addon-manager/doc')
-                    endif
-                    return eval(is_installed_c)
-                endif
-            endfun
-        " }
-
-        " Set up VAM {
-            fun SetupVAM()
-                let vam_install_path = expand('$HOME') . '/.vim/vim-addons'
-                let g:vim_addon_manager = {'auto_install' : 1 }
-                exec 'set runtimepath+='.vam_install_path.'/vim-addon-manager'
-                call vam#ActivateAddons([], {'auto_install' : 1})
-            endfun
-            call SetupVAM()
-        " }
-    " }
 " }
 
 " Addons {
@@ -124,5 +89,22 @@
 " }
 
 " UI {
-    
+    colorscheme zenburn         " Zenburn because it looks nicer in terminal
+                                " than Solarized
+
+    set tabpagemax=15           " a reasonable maximum number of tabs to show
+    set showmode                " show current mode
+    set cursorline              " highlight current line
+
+    if has('cmdline_info')
+        set ruler               " helpful at times; may remove later, though
+        set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " crazy ruler
+        set showcmd             " show partial commands, etc.
+    endif
+
+    " Statusline {
+        if has('statusline')
+            set laststatus=2
+    " }
+
 " }
