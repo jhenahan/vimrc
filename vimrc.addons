@@ -15,15 +15,15 @@
     " }
 
 " Basic Addons {
-    call vam#ActivateAddons(['github:jnurmine/Zenburn'])    " zenburn colorscheme
-    call vam#ActivateAddons(['github:mw-utils'])            " cache file contents
-    call vam#ActivateAddons(['github:syntax-checker'])      " an apparently cleaner syntastic
-    call vam#ActivateAddons(['github:git'])                 " a little nicer than fugitive
-    if executable('ack-grep')
-        let g:ackprg="ack-grep -H --nocolor --nogroup --column"
-        call vam#ActivateAddons(['mileszs/ack.vim'])
+    call vam#ActivateAddons(['Zenburn'])            " zenburn colorscheme
+    call vam#ActivateAddons(['vim-addon-mw-utils']) " cache file contents
+    call vam#ActivateAddons(['fugitive'])           " fugitive git is best git
+    call vam#ActivateAddons(['gitv'])               " neat git visualizer
+    if executable('ack-grep')                       " a slave uses grep; a man uses ack!
+        let g:ackprg='ack-grep -H --nocolor --nogroup --column'
+        call vam#ActivateAddons(['ack'])
     elseif executable('ack')
-        call vam#ActivateAddons(['mileszs/ack.vim'])
+        call vam#ActivateAddons(['ack'])
     endif
 " }
 
@@ -37,39 +37,69 @@
     " To limit the addons used, list the groups you want to use in
     " .vimrc.addons.local
     if !exists(g:addon_groups)
-        let g:addon_groups=['general', " these should cover a majority of users
-                            'neocomplcache', " only a million times better than snipmate
+        let g:addon_groups=['general',     " these should cover a majority of users
+                            'snippets',    " only a million times better than snipmate
                             'programming', " a couple of nice tools for the enlightened programmer
-                            'haskell', " <3
-                            'latex', " \leq 3
-                            'js', " JS is the new JS
-                            'html', " High 5
-                            'ruby', " I've been meaning to learn
-                            'python', " poor man's programming
-                            'php' " broke man's programming
+                            'haskell',     " <3
+                            'latex',       " \leq 3
+                            'js',          " JS is the new JS
+                            'html',        " High 5
+                            'ruby',        " I've been meaning to learn
+                            'python',      " poor man's programming
+                            'php'          " broke man's programming
                             ]
     endif
 
     " General use addons {
         if count(g:addon_groups, 'general')
-            call vam#ActivateAddons(['github:scrooloose/nerdtree']) " popular, though I don't use it much
-            call vam#ActivateAddons(['surround']) " very convenient 
-            call vam#ActivateAddons(['AutoClose%1849']) " TODO: make AutoClose less aggressive with quotes in vim files
-            call vam#ActivateAddons(['ctrlp']) " preferable to Ctrl-T
-            call vam#ActivateAddons(['ctrlp-modified']) " not sure what this does, but we'll see
-            call vam#ActivateAddons(['matchit.zip']) " make % cool
-            call vam#ActivateAddons(['Powerline']) " Powerline is where it's at
-            call vam#ActivateAddons(['EasyMotion']) " make motion commands sexy again
-            call vam#ActivateAddons(['CSApprox']) " if for some reason Zenburn is not to your taste
-            call vam#ActivateAddons(['undotree']) " it's practically magic
+            call vam#ActivateAddons(['The_NERD_Tree'])              " popular, though I don't use it much
+            call vam#ActivateAddons(['surround'])                   " very convenient
+            call vam#ActivateAddons(['delimitMate'])                " A little nicer than AutoClose
+            call vam#ActivateAddons(['ctrlp'])                      " preferable to Ctrl-T
+            call vam#ActivateAddons(['ctrlp-modified'])             " not sure what this does, but we'll see
+            call vam#ActivateAddons(['matchit.zip'])                " make % cool
+            call vam#ActivateAddons(['Powerline'])                  " Powerline is where it's at
+            call vam#ActivateAddons(['EasyMotion'])                 " make motion commands sexy again
+            call vam#ActivateAddons(['CSApprox'])                   " if for some reason Zenburn is not to your taste
+            call vam#ActivateAddons(['undotree'])                   " it's practically magic
             call vam#ActivateAddons(['github:myusuf3/numbers.vim']) " never count lines again!
-            call vam#ActivateAddons(['Indent_Guides']) " don't count your tabs, either
-            call vam#ActivateAddons(['restore_view']) " save some lines and get a nice view restorer
-            call vam#ActivateAddons(['abolish']) " save your hands from the evils of English
+            call vam#ActivateAddons(['Indent_Guides'])              " don't count your tabs, either
+            call vam#ActivateAddons(['restore_view'])               " save some lines and get a nice view restorer
+            call vam#ActivateAddons(['abolish'])                    " save your hands from the evils of English
         endif
     " }
 
     " Snippet addons {
-        
+        if count(g:addon_groups, 'snippets')
+            call vam#ActivateAddons(['neocomplcache'])
+            call vam#ActivateAddons(['neosnippet'])
+            call vam#ActivateAddons(['snipmate-snippets'])
+        endif
+    " }
+
+    " Programming addons {
+        if count(g:addon_groups, 'programming')
+            call vam#ActivateAddons(['Syntastic'])          " Nice syntax checking for just about everything
+            call vam#ActivateAddons(['WebAPI'])
+            call vam#ActivateAddons(['Gist'])               " TODO: Depends on WebAPI. Make sure this is reflected in the package description
+            call vam#ActivateAddons(['The_NERD_Commenter']) " useful commenting
+            call vam#ActivateAddons(['Tabular'])            " pretty up your alignment
+            if executable('ctags')
+                call vam#ActivateAddons(['Tagbar'])
+            endif
+            if has('python') || has('python3')
+                call vam#ActivateAddons(['conque-term'])    " for when you absolutely, positively, must have a terminal in vim
+            endif
+        endif
+    " }
+
+    " Haskell addons {
+        if count(g:addon_groups, 'haskell')
+            call vam#ActivateAddons(['github:dag/vim2hs'])          " lots of neat conveniences https://github.com/dag/vim2hs
+            call vam#ActivateAddons(['github:eagletmt/ghcmod-vim']) " as if you need any more than this
+            call vam#ActivateAddons(['neco-ghc'])                   " completion through ghc-mod
+            call vam#ActivateAddons(['Haskell_Conceal'])            " pretty up your source files
+            call vam#ActivateAddons(['github:bitc/lushtags'])       " this pulls the whole repo, including Haskell sources
+        endif
     " }
 " }
