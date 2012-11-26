@@ -102,4 +102,54 @@
             call vam#ActivateAddons(['github:bitc/lushtags'])       " this pulls the whole repo, including Haskell sources
         endif
     " }
+
+    " LaTeX addons {
+        if count(g:addon_groups, 'latex')
+            call vam#ActivateAddons(['LaTeX_Box'])
+            " This is pretty much all you need, but I'm planning to split each
+            " of these groups into separate files to contain the configuration
+            " stuff
+            call vam#ActivateAddons(['latextags'])      " tag all the things
+        endif
+    " }"
+
+    " Javascript Addons {
+        if count(g:addon_groups, 'js')
+            call vam#ActivateAddons(['JSON'])                           " might move this to general programming; JSON is becoming more common
+            call vam#ActivateAddons(['github:pangloss/vim-javascript']) " best I've been able to find
+        endif
+
+    " }
+
+    " HTML Addons {
+        if count(g:addon_groups, 'html')
+            call vam#ActivateAddons(['html5'])                         " supports all that WAI-ARIA goodness
+            call vam#ActivateAddons(['HTML_AutoCloseTag'])             " testing; might remove later
+            call vam#ActivateAddons(['github:hail2u/vim-css3-syntax']) " had good experiences with this one; still looking at options
+        endif
+    " }
+    
+    " Ruby Addons {
+        if count(g:addon_groups, 'ruby')
+            call vam#ActivateAddons(['rails'])      " I'll get to Ruby eventually, I promise
+            let g:rubycomplete_buffer_loading = 1
+            let g:rubycomplete_classes_in_global = 1
+            let g:rubycomplete_rails = 1
+        endif
+    " }
+
+    " Python {
+        if count(g:addon_groups, 'python')
+            call vam#ActivateAddons(['Python-mode-klen'])       " pretty much the best
+            call vam#ActivateAddons(['python%790'])             " nice highlighting
+            call vam#ActivateAddons(['python_match'])           " more nice matching
+            call vam#ActivateAddons(['pythoncomplete'])         " and a set of completions
+        endif
+    " }
+
+    " PHP {
+        if count(g:addon_groups, 'php')
+            call vam#ActivateAddons(['PIV'])        " all you need, and the only decent way to work with PHP
+        endif
+    " }
 " }
