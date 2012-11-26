@@ -33,6 +33,7 @@
 " Env {
     " Compat and clipboards {
     set nocompatible " must be first line
+
     if has ("unix") && "Darwin" != system("echo -n \"$(uname)\"")
         " on Linux use + register for copy-paste
         set clipboard=unnamedplus
@@ -41,15 +42,13 @@
         set clipboard=unnamed
     endif
     " }
+
     " Win Compat (for those dark times) {
         " Use '.vim' instead of 'vimfiles'; this makes
         if has('win32') || has('win64')
             set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
         endif
     " }
-
-    filetype indent plugin on
-    syntax on
 
     " VAM Setup {
         " Check for VAM installation {
@@ -75,8 +74,8 @@
 
         " Set up VAM {
             fun SetupVAM()
-                let g:vim_addon_manager = {'auto_install' : 1 }
                 let vam_install_path = expand('$HOME') . '/.vim/vim-addons'
+                let g:vim_addon_manager = {'auto_install' : 1 }
                 exec 'set runtimepath+='.vam_install_path.'/vim-addon-manager'
                 call vam#ActivateAddons([], {'auto_install' : 1})
             endfun
@@ -85,3 +84,45 @@
     " }
 " }
 
+" Addons {
+    " Use a separate addon config file to keep the main vimrc clean {
+        if filereadable(expand("~/.vimrc.addons"))
+            source ~/.vimrc.addons
+        endif
+    " }
+" }
+
+" General settings {
+    set background=dark " Because dark backgrounds are nice
+    set t_Co=256        " The colors, Duke, the colors!
+
+    filetype indent plugin on   " filetypes are nice
+    syntax on                   " highlighting is nicer
+    scriptencoding utf-8
+    " uncomment the following lines to admit your weakness
+    " set mouse=a               " automatically enable mouse usage
+    " set mousehide             " hide the mouse cursor while typing
+
+    " Automatically change directory when opening a new buffer
+    autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
+
+    set shortmess+=filmnrxoOtT  " abbreviates messages because 'Hit enter' is dumb
+    set viewoptions=folds,options,cursor,unix,slash " more compat stuff
+    set virtualedit=onemore     " allow cursor beyond last character
+    set history=1000            " Bigger is better
+    set spell                   " spell checking
+    set hidden                  " don't unload file when buffer is abandoned
+
+    " Backups and undofile {
+        set backup              " Better safe than sorry?
+        if has('persistent_undo')
+            set undofile        " As long as we're backing up, we can also
+            set undolevels=1000 " back up the other way
+            set undoreload=10000
+        endif
+    " }
+" }
+
+" UI {
+    
+" }
