@@ -36,26 +36,15 @@
 " Optional Addon Groups {
     " To limit the addons used, list the groups you want to use in
     " .vimrc.addons.local
-    if !exists(g:addon_groups)
-        let g:addon_groups=['general',     " these should cover a majority of users
-                            \'snippets',    " only a million times better than snipmate
-                            \'programming', " a couple of nice tools for the enlightened programmer
-                            \'haskell',     " <3
-                            \'latex',       " \leq 3
-                            \'js',          " JS is the new JS
-                            \'html',        " High 5
-                            \'ruby',        " I've been meaning to learn
-                            \'python',      " poor man's programming
-                            \'php',         " broke man's programming
-                            \'haml'         " make your life suck less
-                            \]
+    if !exists('g:addon_groups')
+        let g:addon_groups=['general','snippets','programming','haskell','latex','js','html','ruby','python','php','haml']
     endif
 
     let g:vam_groups=expand('$HOME') . '/.vim/vim-addons/groups/'
 
     " General use addons {
         if count(g:addon_groups, 'general')
-            call vam#ActivateAddons(['The_NERD_Tree'])              " popular, though I don't use it much
+            call vam#ActivateAddons(['The_NERD_tree'])              " popular, though I don't use it much
             call vam#ActivateAddons(['surround'])                   " very convenient
             call vam#ActivateAddons(['delimitMate'])                " A little nicer than AutoClose
             call vam#ActivateAddons(['ctrlp'])                      " preferable to Ctrl-T
@@ -94,8 +83,9 @@
                 call vam#ActivateAddons(['Tagbar'])
             endif
             if has('python') || has('python3')
-                call vam#ActivateAddons(['conque-term'])    " for when you absolutely, positively, must have a terminal in vim
+                call vam#ActivateAddons(['Conque_Shell'])   " for when you absolutely, positively, must have a terminal in vim
             endif
+            call vam#ActivateAddons(['vimproc'])            " run processes within vim
 
             " Strip whitespace {
             fun! StripWhitespace()
@@ -107,7 +97,7 @@
                 call cursor(l, c)
             endfun
             " this has potential to be dangerous, so comment out if you're not a fan
-            autocmd FileType c,cpp,java,php,hs,tex,rust autocmd BufWritePre <buffer> call StripWhitespace() 
+            autocmd FileType c,cpp,java,php,hs,tex,rust autocmd BufWritePre <buffer> call StripWhitespace()
         endif
     " }
 
@@ -128,7 +118,6 @@
             " This is pretty much all you need, but I'm planning to split each
             " of these groups into separate files to contain the configuration
             " stuff
-            call vam#ActivateAddons(['latextags'])      " tag all the things
         endif
     " }"
 
@@ -147,7 +136,7 @@
             call vam#ActivateAddons(['github:hail2u/vim-css3-syntax']) " had good experiences with this one; still looking at options
         endif
     " }
-    
+
     " Ruby Addons {
         if count(g:addon_groups, 'ruby')
             call vam#ActivateAddons(['rails'])      " I'll get to Ruby eventually, I promise
