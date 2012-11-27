@@ -38,17 +38,20 @@
     " .vimrc.addons.local
     if !exists(g:addon_groups)
         let g:addon_groups=['general',     " these should cover a majority of users
-                            'snippets',    " only a million times better than snipmate
-                            'programming', " a couple of nice tools for the enlightened programmer
-                            'haskell',     " <3
-                            'latex',       " \leq 3
-                            'js',          " JS is the new JS
-                            'html',        " High 5
-                            'ruby',        " I've been meaning to learn
-                            'python',      " poor man's programming
-                            'php'          " broke man's programming
-                            ]
+                            \'snippets',    " only a million times better than snipmate
+                            \'programming', " a couple of nice tools for the enlightened programmer
+                            \'haskell',     " <3
+                            \'latex',       " \leq 3
+                            \'js',          " JS is the new JS
+                            \'html',        " High 5
+                            \'ruby',        " I've been meaning to learn
+                            \'python',      " poor man's programming
+                            \'php',         " broke man's programming
+                            \'haml'         " make your life suck less
+                            \]
     endif
+
+    let g:vam_groups=expand('$HOME') . '/.vim/vim-addons/groups/'
 
     " General use addons {
         if count(g:addon_groups, 'general')
@@ -66,6 +69,9 @@
             call vam#ActivateAddons(['Indent_Guides'])              " don't count your tabs, either
             call vam#ActivateAddons(['restore_view'])               " save some lines and get a nice view restorer
             call vam#ActivateAddons(['abolish'])                    " save your hands from the evils of English
+            call vam#ActivateAddons(['rainbow_parentheses'])        " stray parens begone!
+            let g:NERDShutUp=1
+            let b:match_ignorecase = 1
         endif
     " }
 
@@ -90,11 +96,24 @@
             if has('python') || has('python3')
                 call vam#ActivateAddons(['conque-term'])    " for when you absolutely, positively, must have a terminal in vim
             endif
+
+            " Strip whitespace {
+            fun! StripWhitespace()
+                let _s=@/
+                let l = line(".")
+                let c = col(".")
+                %s/\s\+$//e
+                let @/=_s
+                call cursor(l, c)
+            endfun
+            " this has potential to be dangerous, so comment out if you're not a fan
+            autocmd FileType c,cpp,java,php,hs,tex,rust autocmd BufWritePre <buffer> call StripWhitespace() 
         endif
     " }
 
     " Haskell addons {
         if count(g:addon_groups, 'haskell')
+            au BufEnter *.hs compiler ghc
             call vam#ActivateAddons(['github:dag/vim2hs'])          " lots of neat conveniences https://github.com/dag/vim2hs
             call vam#ActivateAddons(['github:eagletmt/ghcmod-vim']) " as if you need any more than this
             call vam#ActivateAddons(['neco-ghc'])                   " completion through ghc-mod
@@ -150,6 +169,15 @@
     " PHP {
         if count(g:addon_groups, 'php')
             call vam#ActivateAddons(['PIV'])        " all you need, and the only decent way to work with PHP
+        endif
+        let g:DisableAutoPHPFolding = 0
+        let g:PIVAutoClose = 0
+    " }
+
+    " Haml {
+        if count(g:addon_groups, 'haml')
+            call vam#ActivateAddons(['haml.zip'])       " closing tags? no thanks
+            call vam#ActivateAddons(['scss-syntax'])    " no more vendor prefixes
         endif
     " }
 " }
