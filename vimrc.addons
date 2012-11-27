@@ -105,6 +105,8 @@
         if count(g:addon_groups, 'haskell')
             call vam#ActivateAddons(['haskellmode-vim'])
             au BufEnter *.hs compiler ghc
+            let g:haddock_browser = 'open'
+            let g:haddock_browser_callformat = '%s %s'
             call vam#ActivateAddons(['github:dag/vim2hs'])          " lots of neat conveniences https://github.com/dag/vim2hs
             call vam#ActivateAddons(['github:eagletmt/ghcmod-vim']) " as if you need any more than this
             call vam#ActivateAddons(['neco-ghc'])                   " completion through ghc-mod
