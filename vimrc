@@ -55,18 +55,10 @@
             source ~/.vimrc.local
         endif
 "}
-" Addons {
-    " Use a separate addon config file to keep the main vimrc clean {
-        if filereadable(expand("~/.vimrc.addons"))
-            source ~/.vimrc.addons
-        endif
-    " }
-" }
-
-
 " General settings {
-    set background=dark " Because dark backgrounds are nice
-    set t_Co=256        " The colors, Duke, the colors!
+    let mapleader=','          " do people really use \?
+    set background=dark        " Because dark backgrounds are nice
+    set t_Co=256               " The colors, Duke, the colors!
 
     filetype indent plugin on   " filetypes are nice
     syntax on                   " highlighting is nicer
@@ -105,7 +97,13 @@
 
     set title   " show the title of the active file
 " }
-
+" Addons {
+    " Use a separate addon config file to keep the main vimrc clean {
+        if filereadable(expand("~/.vimrc.addons"))
+            source ~/.vimrc.addons
+        endif
+    " }
+" }
 " UI {
     colorscheme solarized       " I'm taking suggestions on a new colorscheme
 
@@ -158,8 +156,6 @@
 " }
 
 " Remapped Keys {
-    let mapleader=','       " do people really use \?
-
     " Wrapped lines goes down/up to next row, rather than next line in file.
     nnoremap j gj
     nnoremap k gk
