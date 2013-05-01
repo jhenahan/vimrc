@@ -280,7 +280,6 @@
             " This is pretty much all you need, but I'm planning to split each
             " of these groups into separate files to contain the configuration
             " stuff
-            let g:LatexBox_latexmk_options = '-pvc'
             let g:LatexBox_output_type = "pdf"
             let g:LatexBox_autojump = 1 
             let g:tex_flavor='latex'

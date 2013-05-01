@@ -48,7 +48,6 @@
         endif
     " }
 " }
-
 " Local {
     " System-specific settings (guifont, local packages, etc.) go here
     " This is also where you set g:addon_groups
