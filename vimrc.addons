@@ -53,7 +53,7 @@
     " To limit the addons used, list the groups you want to use in
     " .vimrc.local
     if !exists('g:addon_groups')
-        let g:addon_groups=['general','snippets','programming','haskell','latex','js','html','ruby','python','php','haml']
+        let g:addon_groups=['general','snippets', 'utility', 'programming','haskell','latex','js','html','ruby','python','php','haml']
     endif
 
     let g:vam_groups=expand('$HOME') . '/.vim/vim-addons/groups/'
@@ -85,14 +85,14 @@
                 map <leader>e :NERDTreeFind<CR>
                 nmap <leader>nt :NERDTreeFind<CR>
 
-                let NERDTreeShowBookmarks=1
-                let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
-                let NERDTreeChDirMode=0
-                let NERDTreeQuitOnOpen=1
-                let NERDTreeMouseMode=2
-                let NERDTreeShowHidden=1
-                let NERDTreeKeepTreeInNewTab=1
-                let g:nerdtree_tabs_open_on_gui_startup=0
+                let NERDTreeShowBookmarks               = 1
+                let NERDTreeIgnore                      = ['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
+                let NERDTreeChDirMode                   = 0
+                let NERDTreeQuitOnOpen                  = 1
+                let NERDTreeMouseMode                   = 2
+                let NERDTreeShowHidden                  = 1
+                let NERDTreeKeepTreeInNewTab            = 1
+                let g:nerdtree_tabs_open_on_gui_startup = 0
             " }
             " ctrlp {
                 let g:ctrlp_working_path_mode = 2
@@ -112,8 +112,8 @@
                 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd guibg=#212121 ctermbg=3
                 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#404040 ctermbg=4
                 set ts=4 sw=4 et
-                let g:indent_guides_start_level = 2
-                let g:indent_guides_guide_size = 1
+                let g:indent_guides_start_level           = 2
+                let g:indent_guides_guide_size            = 1
                 let g:indent_guides_enable_on_vim_startup = 1
             " }
             " Powerline {
@@ -130,21 +130,22 @@
 
     " Snippet addons {
         if count(g:addon_groups, 'snippets')
+            call vam#ActivateAddons(['neocomplcache'])
             call vam#ActivateAddons(['neosnippet'])
         " neocomplcache {
-            let g:acp_enableAtStartup = 0
-            let g:neocomplcache_enable_at_startup = 1
+            let g:acp_enableAtStartup                        = 0
+            let g:neocomplcache_enable_at_startup            = 1
             let g:neocomplcache_enable_camel_case_completion = 1
-            let g:neocomplcache_enable_smart_case = 1
-            let g:neocomplcache_enable_underbar_completion = 1
-            let g:neocomplcache_enable_auto_delimiter = 1
-            let g:neocomplcache_max_list = 15
+            let g:neocomplcache_enable_smart_case            = 1
+            let g:neocomplcache_enable_underbar_completion   = 1
+            let g:neocomplcache_enable_auto_delimiter        = 1
+            let g:neocomplcache_max_list                     = 15
             let g:neocomplcache_force_overwrite_completefunc = 1
         " }
         " SuperTab like snippets behavior.
             imap <silent><expr><TAB> neosnippet#expandable() ?
-            \ "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ?
-            \ "\<C-e>" : "\<TAB>")
+                \ "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ?
+                \ "\<C-e>" : "\<TAB>")
         smap <TAB> <Right><Plug>(neosnippet_jump_or_expand)
 
         " Define dictionary.
@@ -188,10 +189,10 @@
             if !exists('g:neocomplcache_omni_patterns')
             let g:neocomplcache_omni_patterns = {}
             endif
-            let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+            let g:neocomplcache_omni_patterns.php  = '[^. \t]->\h\w*\|\h\w*::'
             let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-            let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-            let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+            let g:neocomplcache_omni_patterns.c    = '[^.[:digit:] *\t]\%(\.\|->\)'
+            let g:neocomplcache_omni_patterns.cpp  = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
             let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
         " For snippet_complete marker.
             if has('conceal')
@@ -200,13 +201,39 @@
     endif
     " }
 
+    " Utility addons {
+        if count(g:addon_groups, 'utility')
+            call vam#ActivateAddons(['Tabular'])            " pretty up your alignment
+            " Tabularize shortcuts {
+                nmap <leader>a= :Tabularize /=<CR>
+                vmap <Leader>a= :Tabularize /=<CR>
+                nmap <Leader>a: :Tabularize /:<CR>
+                vmap <Leader>a: :Tabularize /:<CR>
+                nmap <Leader>a:: :Tabularize /:\zs<CR>
+                vmap <Leader>a:: :Tabularize /:\zs<CR>
+                nmap <Leader>a, :Tabularize /,<CR>
+                vmap <Leader>a, :Tabularize /,<CR>
+                nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+                vmap <Leader>a<Bar> :Tabularize /<Bar><CR> <Leader>a= :Tabularize /=<CR>
+                vmap <Leader>a= :Tabularize /=<CR>
+                nmap <Leader>a: :Tabularize /:<CR>
+                vmap <Leader>a: :Tabularize /:<CR>
+                nmap <Leader>a:: :Tabularize /:\zs<CR>
+                vmap <Leader>a:: :Tabularize /:\zs<CR>
+                nmap <Leader>a, :Tabularize /,<CR>
+                vmap <Leader>a, :Tabularize /,<CR>
+                nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+                vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+            " }
+        endif
+    " }
+
     " Programming addons {
         if count(g:addon_groups, 'programming')
             call vam#ActivateAddons(['Syntastic'])          " Nice syntax checking for just about everything
             call vam#ActivateAddons(['WebAPI'])
             call vam#ActivateAddons(['Gist'])               " TODO: Depends on WebAPI. Make sure this is reflected in the package description
             call vam#ActivateAddons(['The_NERD_Commenter']) " useful commenting
-            call vam#ActivateAddons(['Tabular'])            " pretty up your alignment
             if executable('ctags')
                 call vam#ActivateAddons(['Tagbar'])
         " TagBar {
@@ -233,27 +260,6 @@
             " this has potential to be dangerous, so comment out if you're not a fan
             autocmd FileType c,cpp,java,php,hs,tex,rust autocmd BufWritePre <buffer> call StripWhitespace()
 
-        " Tabularize shortcuts {
-            nmap <leader>a= :Tabularize /=<CR>
-            vmap <Leader>a= :Tabularize /=<CR>
-            nmap <Leader>a: :Tabularize /:<CR>
-            vmap <Leader>a: :Tabularize /:<CR>
-            nmap <Leader>a:: :Tabularize /:\zs<CR>
-            vmap <Leader>a:: :Tabularize /:\zs<CR>
-            nmap <Leader>a, :Tabularize /,<CR>
-            vmap <Leader>a, :Tabularize /,<CR>
-            nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-            vmap <Leader>a<Bar> :Tabularize /<Bar><CR> <Leader>a= :Tabularize /=<CR>
-            vmap <Leader>a= :Tabularize /=<CR>
-            nmap <Leader>a: :Tabularize /:<CR>
-            vmap <Leader>a: :Tabularize /:<CR>
-            nmap <Leader>a:: :Tabularize /:\zs<CR>
-            vmap <Leader>a:: :Tabularize /:\zs<CR>
-            nmap <Leader>a, :Tabularize /,<CR>
-            vmap <Leader>a, :Tabularize /,<CR>
-            nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-            vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-        " }
         endif
     " }
 
@@ -261,10 +267,10 @@
         if count(g:addon_groups, 'haskell')
             call vam#ActivateAddons(['haskellmode-vim'])
             au BufEnter *.hs compiler ghc
-            let g:haddock_browser = 'open'
+            let g:haddock_browser = 'open'                          " only works on OS X, may add switches
             let g:haddock_browser_callformat = '%s %s'
             call vam#ActivateAddons(['github:dag/vim2hs'])          " lots of neat conveniences https://github.com/dag/vim2hs
-            call vam#ActivateAddons(['github:eagletmt/ghcmod-vim']) " as if you need any more than this
+            call vam#ActivateAddons(['ghcmod']) " as if you need any more than this
             call vam#ActivateAddons(['neco-ghc'])                   " completion through ghc-mod
             call vam#ActivateAddons(['Haskell_Conceal'])            " pretty up your source files
             call vam#ActivateAddons(['github:bitc/lushtags'])       " this pulls the whole repo, including Haskell sources
@@ -286,7 +292,7 @@
     " Javascript Addons {
         if count(g:addon_groups, 'js')
             call vam#ActivateAddons(['JSON'])                           " might move this to general programming; JSON is becoming more common
-            call vam#ActivateAddons(['github:pangloss/vim-javascript']) " best I've been able to find
+            call vam#ActivateAddons(['vim-javascript']) " best I've been able to find
         " JSON {
             nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
         " }
@@ -298,7 +304,7 @@
         if count(g:addon_groups, 'html')
             call vam#ActivateAddons(['html5'])                         " supports all that WAI-ARIA goodness
             call vam#ActivateAddons(['HTML_AutoCloseTag'])             " testing; might remove later
-            call vam#ActivateAddons(['github:hail2u/vim-css3-syntax']) " had good experiences with this one; still looking at options
+            call vam#ActivateAddons(['vim-css3-syntax']) " had good experiences with this one; still looking at options
         " AutoCloseTag {
             " Make it so AutoCloseTag works for xml and xhtml files as well
         au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
