@@ -283,6 +283,7 @@
             let g:LatexBox_latexmk_options = '-pvc'
             let g:LatexBox_output_type = "pdf"
             let g:LatexBox_autojump = 1 
+            let g:tex_flavor='latex'
         endif
     " }"
 
