@@ -15,16 +15,32 @@
     " }
 
 " Basic Addons {
-    call vam#ActivateAddons(['Zenburn'])            " zenburn colorscheme
+    call vam#ActivateAddons(['Solarized'])          " solarized colorscheme
     call vam#ActivateAddons(['vim-addon-mw-utils']) " cache file contents
     call vam#ActivateAddons(['fugitive'])           " fugitive git is best git
     call vam#ActivateAddons(['gitv'])               " neat git visualizer
-    if executable('ack-grep')                       " a slave uses grep; a man uses ack!
+    if executable('ag')
+        call vam#ActivateAddons(['ag'])             " a slave uses grep; a man uses ag!
+    elseif executable('ack-grep')
         let g:ackprg='ack-grep -H --nocolor --nogroup --column'
         call vam#ActivateAddons(['ack'])
     elseif executable('ack')
         call vam#ActivateAddons(['ack'])
     endif
+    " Fugitive {
+        nnoremap <silent> <leader>gs :Gstatus<CR>
+        nnoremap <silent> <leader>gd :Gdiff<CR>
+        nnoremap <silent> <leader>gc :Gcommit<CR>
+        nnoremap <silent> <leader>gb :Gblame<CR>
+        nnoremap <silent> <leader>gl :Glog<CR>
+        nnoremap <silent> <leader>gp :Git push<CR>
+    " }
+    " Solarized {
+        if !has('gui_running') " Make terminal vim not quite so ugly under Solarized
+            let g:solarized_termtrans=1
+            let g:solarized_termcolors=256
+        endif
+    " }
 " }
 
 " Adds a little functionality for local addon activation {
@@ -35,7 +51,7 @@
 
 " Optional Addon Groups {
     " To limit the addons used, list the groups you want to use in
-    " .vimrc.addons.local
+    " .vimrc.local
     if !exists('g:addon_groups')
         let g:addon_groups=['general','snippets','programming','haskell','latex','js','html','ruby','python','php','haml']
     endif
@@ -47,10 +63,10 @@
             call vam#ActivateAddons(['The_NERD_tree'])              " popular, though I don't use it much
             call vam#ActivateAddons(['surround'])                   " very convenient
             call vam#ActivateAddons(['delimitMate'])                " A little nicer than AutoClose
-            call vam#ActivateAddons(['ctrlp'])                      " preferable to Ctrl-T
+            call vam#ActivateAddons(['ctrlp'])                      " preferable to Ctrl-T -- might be ditching this in the future
             call vam#ActivateAddons(['ctrlp-modified'])             " not sure what this does, but we'll see
             call vam#ActivateAddons(['matchit.zip'])                " make % cool
-            call vam#ActivateAddons(['Powerline'])                  " Powerline is where it's at
+            call vam#ActivateAddons(['powerline'])              " Powerline is where it's at
             call vam#ActivateAddons(['EasyMotion'])                 " make motion commands sexy again
             call vam#ActivateAddons(['CSApprox'])                   " if for some reason Zenburn is not to your taste
             call vam#ActivateAddons(['undotree'])                   " it's practically magic
@@ -59,17 +75,132 @@
             call vam#ActivateAddons(['restore_view'])               " save some lines and get a nice view restorer
             call vam#ActivateAddons(['abolish'])                    " save your hands from the evils of English
             call vam#ActivateAddons(['rainbow_parentheses'])        " stray parens begone!
+            call vam#ActivateAddons(['LustyExplorer'])          " Looks like a cooler version of BufExplorer
+            call vam#ActivateAddons(['Indent_Guides'])          " Useful
             let g:NERDShutUp=1
             let b:match_ignorecase = 1
+
+            " NerdTree Settings {
+                map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
+                map <leader>e :NERDTreeFind<CR>
+                nmap <leader>nt :NERDTreeFind<CR>
+
+                let NERDTreeShowBookmarks=1
+                let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
+                let NERDTreeChDirMode=0
+                let NERDTreeQuitOnOpen=1
+                let NERDTreeMouseMode=2
+                let NERDTreeShowHidden=1
+                let NERDTreeKeepTreeInNewTab=1
+                let g:nerdtree_tabs_open_on_gui_startup=0
+            " }
+            " LustyExplorer {
+                nmap <leader>b :LustyBufferExplorer<CR>
+            " }
+            " ctrlp {
+                let g:ctrlp_working_path_mode = 2
+                nnoremap <silent> <D-t> :CtrlP<CR>
+                nnoremap <silent> <D-r> :CtrlPMRU<CR>
+                let g:ctrlp_custom_ignore = {
+                            \ 'dir': '\.git$\|\.hg$\|\.svn$',
+                            \ 'file': '\.exe$\|\.so$\|\.dll$' }
+            " }
+            " UndoTree {
+                nnoremap <Leader>u :UndotreeToggle<CR>
+                let g:undotree_SetFocusWhenToggle=1 " if undotree is opened, it is likely one wants to interact with it.
+            " }
+            " indent_guides {
+                let g:indent_guides_auto_colors = 1
+                " for some colorschemes ,autocolor will not work,like 'desert','ir_black'.
+                autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd guibg=#212121 ctermbg=3
+                autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#404040 ctermbg=4
+                set ts=4 sw=4 et
+                let g:indent_guides_start_level = 2
+                let g:indent_guides_guide_size = 1
+                let g:indent_guides_enable_on_vim_startup = 1
+            " }
+            " Powerline {
+                setlocal laststatus=2
+            " }
+            " Rainbow Parens {
+                au VimEnter * RainbowParenthesesToggle
+                au Syntax * RainbowParenthesesLoadRound
+                au Syntax * RainbowParenthesesLoadSquare
+                au Syntax * RainbowParenthesesLoadBraces
+            " }
         endif
-    " }
+        " }
 
     " Snippet addons {
         if count(g:addon_groups, 'snippets')
-            call vam#ActivateAddons(['neocomplcache'])
             call vam#ActivateAddons(['neosnippet'])
-            call vam#ActivateAddons(['snipmate-snippets'])
+        " neocomplcache {
+            let g:acp_enableAtStartup = 0
+            let g:neocomplcache_enable_at_startup = 1
+            let g:neocomplcache_enable_camel_case_completion = 1
+            let g:neocomplcache_enable_smart_case = 1
+            let g:neocomplcache_enable_underbar_completion = 1
+            let g:neocomplcache_enable_auto_delimiter = 1
+            let g:neocomplcache_max_list = 15
+            let g:neocomplcache_force_overwrite_completefunc = 1
+        " }
+        " SuperTab like snippets behavior.
+            imap <silent><expr><TAB> neosnippet#expandable() ?
+            \ "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ?
+            \ "\<C-e>" : "\<TAB>")
+        smap <TAB> <Right><Plug>(neosnippet_jump_or_expand)
+
+        " Define dictionary.
+            let g:neocomplcache_dictionary_filetype_lists = { 'default' : '' }
+
+        " Define keyword.
+            if !exists('g:neocomplcache_keyword_patterns')
+            let g:neocomplcache_keyword_patterns = {}
+            endif
+            let g:neocomplcache_keyword_patterns._ = '\h\w*'
+
+        " Plugin key-mappings.
+            imap <C-k> <Plug>(neosnippet_expand_or_jump)
+            smap <C-k> <Plug>(neosnippet_expand_or_jump)
+            inoremap <expr><C-g> neocomplcache#undo_completion()
+            inoremap <expr><C-l> neocomplcache#complete_common_string()
+            inoremap <expr><CR> neocomplcache#complete_common_string()
+
+        " <TAB>: completion.
+            inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+            inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+
+        " <CR>: close popup
+        " <s-CR>: close popup and save indent.
+            inoremap <expr><s-CR> pumvisible() ? neocomplcache#close_popup()"\<CR>" : "\<CR>"
+            inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+
+        " <C-h>, <BS>: close popup and delete backword char.
+            inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+            inoremap <expr><C-y> neocomplcache#close_popup()
+
+        " Enable omni completion.
+            autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+            autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+            autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+            autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+            autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+            autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+
+        " Enable heavy omni completion.
+            if !exists('g:neocomplcache_omni_patterns')
+            let g:neocomplcache_omni_patterns = {}
+            endif
+            let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+            let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+            let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+            let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+            let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+        " For snippet_complete marker.
+            if has('conceal')
+            set conceallevel=2 concealcursor=i
         endif
+    endif
     " }
 
     " Programming addons {
@@ -81,6 +212,12 @@
             call vam#ActivateAddons(['Tabular'])            " pretty up your alignment
             if executable('ctags')
                 call vam#ActivateAddons(['Tagbar'])
+        " TagBar {
+            nnoremap <silent> <leader>tt :TagbarToggle<CR>
+        " }
+        " Ctags {
+            set tags=./tags;/,~/.vimtags
+        " }
             endif
             if has('python') || has('python3')
                 call vam#ActivateAddons(['Conque_Shell'])   " for when you absolutely, positively, must have a terminal in vim
@@ -98,6 +235,28 @@
             endfun
             " this has potential to be dangerous, so comment out if you're not a fan
             autocmd FileType c,cpp,java,php,hs,tex,rust autocmd BufWritePre <buffer> call StripWhitespace()
+
+        " Tabularize shortcuts {
+            nmap <leader>a= :Tabularize /=<CR>
+            vmap <Leader>a= :Tabularize /=<CR>
+            nmap <Leader>a: :Tabularize /:<CR>
+            vmap <Leader>a: :Tabularize /:<CR>
+            nmap <Leader>a:: :Tabularize /:\zs<CR>
+            vmap <Leader>a:: :Tabularize /:\zs<CR>
+            nmap <Leader>a, :Tabularize /,<CR>
+            vmap <Leader>a, :Tabularize /,<CR>
+            nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+            vmap <Leader>a<Bar> :Tabularize /<Bar><CR> <Leader>a= :Tabularize /=<CR>
+            vmap <Leader>a= :Tabularize /=<CR>
+            nmap <Leader>a: :Tabularize /:<CR>
+            vmap <Leader>a: :Tabularize /:<CR>
+            nmap <Leader>a:: :Tabularize /:\zs<CR>
+            vmap <Leader>a:: :Tabularize /:\zs<CR>
+            nmap <Leader>a, :Tabularize /,<CR>
+            vmap <Leader>a, :Tabularize /,<CR>
+            nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+            vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+        " }
         endif
     " }
 
@@ -121,6 +280,9 @@
             " This is pretty much all you need, but I'm planning to split each
             " of these groups into separate files to contain the configuration
             " stuff
+            let g:LatexBox_latexmk_options = '-pvc'
+            let g:LatexBox_output_type = "pdf"
+            let g:LatexBox_autojump = 1 
         endif
     " }"
 
@@ -128,6 +290,9 @@
         if count(g:addon_groups, 'js')
             call vam#ActivateAddons(['JSON'])                           " might move this to general programming; JSON is becoming more common
             call vam#ActivateAddons(['github:pangloss/vim-javascript']) " best I've been able to find
+        " JSON {
+            nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
+        " }
         endif
 
     " }
@@ -137,6 +302,11 @@
             call vam#ActivateAddons(['html5'])                         " supports all that WAI-ARIA goodness
             call vam#ActivateAddons(['HTML_AutoCloseTag'])             " testing; might remove later
             call vam#ActivateAddons(['github:hail2u/vim-css3-syntax']) " had good experiences with this one; still looking at options
+        " AutoCloseTag {
+            " Make it so AutoCloseTag works for xml and xhtml files as well
+        au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
+        nmap <Leader>ac <Plug>ToggleAutoCloseMappings
+        " }
         endif
     " }
 
@@ -155,6 +325,15 @@
             call vam#ActivateAddons(['python%790'])             " nice highlighting
             call vam#ActivateAddons(['python_match'])           " more nice matching
             call vam#ActivateAddons(['pythoncomplete'])         " and a set of completions
+        " PyMode {
+            let g:pymode_lint_checker = "pyflakes"
+        " }
+        " PythonMode {
+            " Disable if python support not present
+        if !has('python')
+            let g:pymode = 1
+        endif
+        " }
         endif
     " }
 

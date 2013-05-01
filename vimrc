@@ -42,13 +42,20 @@
     " }
 
     " Win Compat (for those dark times) {
-        " Use '.vim' instead of 'vimfiles'; this makes
+        " Use '.vim' instead of 'vimfiles'
         if has('win32') || has('win64')
             set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
         endif
     " }
 " }
 
+" Local {
+    " System-specific settings (guifont, local packages, etc.) go here
+    " This is also where you set g:addon_groups
+        if filereadable(expand("~/.vimrc.local"))
+            source ~/.vimrc.local
+        endif
+"}
 " Addons {
     " Use a separate addon config file to keep the main vimrc clean {
         if filereadable(expand("~/.vimrc.addons"))
@@ -56,6 +63,7 @@
         endif
     " }
 " }
+
 
 " General settings {
     set background=dark " Because dark backgrounds are nice
@@ -92,41 +100,30 @@
         \.idx,.ilg,.inx,.out,.toc,.pyc,.pyo,
         \.jpg,.bmp,.gif,.png,.tif,.tiff,
         \.wmv,.avi,.mpg,.mpeg,.asf,.flv,.mov,
-        \.wav,.aif,.aiff,.mp3,.flac,.mp4
+        \.wav,.aif,.aiff,.mp3,.flac,.mp4,
+	\.pdf,.hi,.gz,.fls,.fdb_latexmk
     " }
 
     set title   " show the title of the active file
 " }
 
 " UI {
-    colorscheme zenburn         " Zenburn because it looks nicer in terminal
-                                " than Solarized
+    colorscheme solarized       " I'm taking suggestions on a new colorscheme
 
     set tabpagemax=15           " a reasonable maximum number of tabs to show
     set showmode                " show current mode
     set cursorline              " highlight current line
     " changes the insert cursor to a pipe rather than a block
-    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    if !has("gui_running")
+    	let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+    	let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    endif
 
     if has('cmdline_info')
         set ruler               " helpful at times; may remove later, though
         set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " crazy ruler
         set showcmd             " show partial commands, etc.
     endif
-
-    " Statusline {
-        if has('statusline')
-            setlocal laststatus=2
-            " and now we build up a sweet statusline
-            set statusline=%<%f                      " filename
-            set statusline+=%w%h%m%r                 " options
-            set statusline+=%{fugitive#statusline()} " git
-            set statusline+=\ [%{&ff}/%Y]            " filetype
-            set statusline+=\ [%{getcwd()}]          " working directory
-            set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " right aligned nav info
-        endif
-    " }
 
     set backspace=indent,eol,start  " sane backspacing
     set linespace=0                 " no weird line spacing
@@ -233,185 +230,6 @@
     " automatically open and close the popup menu/preview window
     au CursorMovedI,InsertLeave * if pumvisible() == 0 | silent! pclose | endif
     set completeopt=menu,preview,longest
-" }
-
-" Ctags {
-    set tags=./tags;/,~/.vimtags
-" }
-
-" AutoCloseTag {
-    " Make it so AutoCloseTag works for xml and xhtml files as well
-    au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
-    nmap <Leader>ac <Plug>ToggleAutoCloseMappings
-" }
-
-" NerdTree {
-    map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
-    map <leader>e :NERDTreeFind<CR>
-    nmap <leader>nt :NERDTreeFind<CR>
-
-    let NERDTreeShowBookmarks=1
-    let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
-    let NERDTreeChDirMode=0
-    let NERDTreeQuitOnOpen=1
-    let NERDTreeMouseMode=2
-    let NERDTreeShowHidden=1
-    let NERDTreeKeepTreeInNewTab=1
-    let g:nerdtree_tabs_open_on_gui_startup=0
-" }
-
-" Tabularize shortcuts {
-    nmap <leader>a= :Tabularize /=<CR>
-    vmap <Leader>a= :Tabularize /=<CR>
-    nmap <Leader>a: :Tabularize /:<CR>
-    vmap <Leader>a: :Tabularize /:<CR>
-    nmap <Leader>a:: :Tabularize /:\zs<CR>
-    vmap <Leader>a:: :Tabularize /:\zs<CR>
-    nmap <Leader>a, :Tabularize /,<CR>
-    vmap <Leader>a, :Tabularize /,<CR>
-    nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-    vmap <Leader>a<Bar> :Tabularize /<Bar><CR> <Leader>a= :Tabularize /=<CR>
-    vmap <Leader>a= :Tabularize /=<CR>
-    nmap <Leader>a: :Tabularize /:<CR>
-    vmap <Leader>a: :Tabularize /:<CR>
-    nmap <Leader>a:: :Tabularize /:\zs<CR>
-    vmap <Leader>a:: :Tabularize /:\zs<CR>
-    nmap <Leader>a, :Tabularize /,<CR>
-    vmap <Leader>a, :Tabularize /,<CR>
-    nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-    vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-" }
-
-" Buffer explorer {
-    nmap <leader>b :BufExplorer<CR>
-" }
-
-" JSON {
-    nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
-" }
-
-" PyMode {
-    let g:pymode_lint_checker = "pyflakes"
-" }
-
-" ctrlp {
-    let g:ctrlp_working_path_mode = 2
-    nnoremap <silent> <D-t> :CtrlP<CR>
-    nnoremap <silent> <D-r> :CtrlPMRU<CR>
-    let g:ctrlp_custom_ignore = {
-                \ 'dir': '\.git$\|\.hg$\|\.svn$',
-                \ 'file': '\.exe$\|\.so$\|\.dll$' }
-" }
-
-" TagBar {
-    nnoremap <silent> <leader>tt :TagbarToggle<CR>
-" }
-
-" PythonMode {
-    " Disable if python support not present
-    if !has('python')
-        let g:pymode = 1
-    endif
-" }
-
-" Fugitive {
-    nnoremap <silent> <leader>gs :Gstatus<CR>
-    nnoremap <silent> <leader>gd :Gdiff<CR>
-    nnoremap <silent> <leader>gc :Gcommit<CR>
-    nnoremap <silent> <leader>gb :Gblame<CR>
-    nnoremap <silent> <leader>gl :Glog<CR>
-    nnoremap <silent> <leader>gp :Git push<CR>
-" }
-
-" neocomplcache {
-    let g:acp_enableAtStartup = 0
-    let g:neocomplcache_enable_at_startup = 1
-    let g:neocomplcache_enable_camel_case_completion = 1
-    let g:neocomplcache_enable_smart_case = 1
-    let g:neocomplcache_enable_underbar_completion = 1
-    let g:neocomplcache_enable_auto_delimiter = 1
-    let g:neocomplcache_max_list = 15
-    let g:neocomplcache_force_overwrite_completefunc = 1
-
-" SuperTab like snippets behavior.
-    imap <silent><expr><TAB> neosnippet#expandable() ?
-                \ "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ?
-                \ "\<C-e>" : "\<TAB>")
-    smap <TAB> <Right><Plug>(neosnippet_jump_or_expand)
-
-" Define dictionary.
-    let g:neocomplcache_dictionary_filetype_lists = { 'default' : '' }
-
-" Define keyword.
-    if !exists('g:neocomplcache_keyword_patterns')
-        let g:neocomplcache_keyword_patterns = {}
-    endif
-    let g:neocomplcache_keyword_patterns._ = '\h\w*'
-
-" Plugin key-mappings.
-    imap <C-k> <Plug>(neosnippet_expand_or_jump)
-    smap <C-k> <Plug>(neosnippet_expand_or_jump)
-    inoremap <expr><C-g> neocomplcache#undo_completion()
-    inoremap <expr><C-l> neocomplcache#complete_common_string()
-    inoremap <expr><CR> neocomplcache#complete_common_string()
-
-" <TAB>: completion.
-    inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
-
-" <CR>: close popup
-" <s-CR>: close popup and save indent.
-    inoremap <expr><s-CR> pumvisible() ? neocomplcache#close_popup()"\<CR>" : "\<CR>"
-    inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-
-" <C-h>, <BS>: close popup and delete backword char.
-    inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-    inoremap <expr><C-y> neocomplcache#close_popup()
-
-" Enable omni completion.
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-
-" Enable heavy omni completion.
-    if !exists('g:neocomplcache_omni_patterns')
-        let g:neocomplcache_omni_patterns = {}
-    endif
-    let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-    let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-    let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-    let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-    let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-
-" use honza's snippets
-    let g:neosnippet#snippets_directory='~/.vim/bundle/snipmate-snippets/snippets'
-
-" For snippet_complete marker.
-    if has('conceal')
-        set conceallevel=2 concealcursor=i
-    endif
-" }
-
-" UndoTree {
-    nnoremap <Leader>u :UndotreeToggle<CR>
-    let g:undotree_SetFocusWhenToggle=1 " if undotree is opened, it is likely one wants to interact with it.
-" }
-
-" indent_guides {
-    if !exists('g:spf13_no_indent_guides_autocolor')
-        let g:indent_guides_auto_colors = 1
-    else
-        " for some colorscheme ,autocolor will not work,like 'desert','ir_black'.
-        autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd guibg=#212121 ctermbg=3
-        autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#404040 ctermbg=4
-    endif
-    set ts=4 sw=4 et
-    let g:indent_guides_start_level = 2
-    let g:indent_guides_guide_size = 1
-    let g:indent_guides_enable_on_vim_startup = 1
 " }
 
 " Functions {
