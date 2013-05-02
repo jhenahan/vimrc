@@ -121,7 +121,6 @@
         set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " crazy ruler
         set showcmd             " show partial commands, etc.
     endif
-
     set backspace=indent,eol,start  " sane backspacing
     set linespace=0                 " no weird line spacing
     set nu                          " line numbers
@@ -143,7 +142,6 @@
     " this just displays whitespace that could be missed
     set listchars=trail:·,precedes:«,extends:»,eol:↲,tab:▸\ 
 " }
-
 " Formatting {
     set nowrap " wrap long lines
     set autoindent " this has a few quirks; look into it
@@ -216,7 +214,6 @@
     hi PmenuThumb guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
 
     " some convenient mappings
-    inoremap <expr> <Esc>   pumvisible() ? "\<C-e>" : "\<Esc>"
     inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<CR>"
     inoremap <expr> <Down>  pumvisible() ? "\<C-n>" : "\<Down>"
     inoremap <expr> <Up>    pumvisible() ? "\<C-p>" : "\<Up>"
@@ -226,7 +223,6 @@
     au CursorMovedI,InsertLeave * if pumvisible() == 0 | silent! pclose | endif
     set completeopt=menu,preview,longest
 " }
-
 " Functions {
     function! InitializeDirectories()
         let separator = "."
