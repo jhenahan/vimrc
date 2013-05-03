@@ -43,12 +43,6 @@
     " }
 " }
 
-" Adds a little functionality for local addon activation {
-    if filereadable(expand('~/.vimrc.addons.local'))
-        source ~/.vimrc.addons.local
-    endif
-" }
-
 " Optional Addon Groups {
     " To limit the addons used, list the groups you want to use in
     " .vimrc.local
@@ -265,15 +259,13 @@
 
     " Haskell addons {
         if count(g:addon_groups, 'haskell')
-            call vam#ActivateAddons(['haskellmode-vim'])
-            au BufEnter *.hs compiler ghc
-            let g:haddock_browser = 'open'                          " only works on OS X, may add switches
-            let g:haddock_browser_callformat = '%s %s'
             call vam#ActivateAddons(['github:dag/vim2hs'])          " lots of neat conveniences https://github.com/dag/vim2hs
             call vam#ActivateAddons(['ghcmod']) " as if you need any more than this
             call vam#ActivateAddons(['neco-ghc'])                   " completion through ghc-mod
-            call vam#ActivateAddons(['Haskell_Conceal'])            " pretty up your source files
-            call vam#ActivateAddons(['github:bitc/lushtags'])       " this pulls the whole repo, including Haskell sources
+            " call vam#ActivateAddons(['github:bitc/lushtags'])       " this pulls the whole repo, including Haskell sources
+            autocmd BufWritePost *.hs GhcModCheckAndLintAsync
+            let g:haskell_conceal_wide = 1
+            let g:haskell_conceal_bad = 1
         endif
     " }
 
@@ -315,6 +307,7 @@
 
     " Ruby Addons {
         if count(g:addon_groups, 'ruby')
+            call vam#ActivateAddons(['vim-ruby'])      " I'll get to Ruby eventually, I promise
             call vam#ActivateAddons(['rails'])      " I'll get to Ruby eventually, I promise
             let g:rubycomplete_buffer_loading = 1
             let g:rubycomplete_classes_in_global = 1
