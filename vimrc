@@ -78,10 +78,12 @@
     set hidden                  " don't unload file when buffer is abandoned
 
     " Backups and undofile {
-        set backup              " Better safe than sorry?
+        set nobackup              " First, backups are mostly just annoying
+        set nowritebackup           " Second, I use CodeKit
+        set noswapfile
         if has('persistent_undo')
-            set undofile        " As long as we're backing up, we can also
-            set undolevels=1000 " back up the other way
+            set undofile          " As long as we're backing up, we can also
+            set undolevels=1000   " back up the other way
             set undoreload=10000
         endif
     " }
@@ -223,6 +225,13 @@
     au CursorMovedI,InsertLeave * if pumvisible() == 0 | silent! pclose | endif
     set completeopt=menu,preview,longest
 " }
+" Adds a little functionality for local addon activation {
+    if filereadable(expand('~/.vimrc.addons.local'))
+        source ~/.vimrc.addons.local
+    endif
+" }
+
+
 " Functions {
     function! InitializeDirectories()
         let separator = "."
