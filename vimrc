@@ -145,13 +145,15 @@
     set listchars=trail:·,precedes:«,extends:»,eol:↲,tab:▸\ 
 " }
 " Formatting {
-    set nowrap " wrap long lines
-    set autoindent " this has a few quirks; look into it
-    set shiftwidth=4 " 4 space indents
-    set expandtab       " tabs are spaces
-    set tabstop=4       " 4 column tabstops
-    set softtabstop=4   " backspace deletes indents
-    set pastetoggle=<F12> " sane paste behavior
+    set nowrap              " wrap long lines
+    set autoindent          " this has a few quirks; look into it
+    set shiftwidth=4        " 4 space indents
+    set expandtab           " tabs are spaces
+    set tabstop=4           " 4 column tabstops
+    set softtabstop=4       " backspace deletes indents
+    set pastetoggle=<F12>   " sane paste behavior
+    nnoremap <leader>r gqip " reflow text automatically in normal mode
+    vnoremap <leader>r gq   " reflow selected text
 
 " }
 
