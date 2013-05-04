@@ -54,7 +54,7 @@
             call vam#ActivateAddons(['ctrlp'])                      " preferable to Ctrl-T -- might be ditching this in the future
             call vam#ActivateAddons(['ctrlp-modified'])             " not sure what this does, but we'll see
             call vam#ActivateAddons(['matchit.zip'])                " make % cool
-            call vam#ActivateAddons(['powerline'])              " Powerline is where it's at
+            call vam#ActivateAddons(['powerline'])                  " Powerline is where it's at
             call vam#ActivateAddons(['EasyMotion'])                 " make motion commands sexy again
             call vam#ActivateAddons(['undotree'])                   " it's practically magic
             call vam#ActivateAddons(['github:myusuf3/numbers.vim']) " never count lines again!
@@ -62,8 +62,7 @@
             call vam#ActivateAddons(['restore_view'])               " save some lines and get a nice view restorer
             call vam#ActivateAddons(['abolish'])                    " save your hands from the evils of English
             call vam#ActivateAddons(['rainbow_parentheses'])        " stray parens begone!
-            call vam#ActivateAddons(['LustyExplorer'])          " Looks like a cooler version of BufExplorer
-            call vam#ActivateAddons(['Indent_Guides'])          " Useful
+            call vam#ActivateAddons(['LustyExplorer'])              " Looks like a cooler version of BufExplorer
             let g:NERDShutUp=1
             let b:match_ignorecase = 1
 
@@ -96,7 +95,7 @@
             " indent_guides {
                 let g:indent_guides_auto_colors = 1
                 " for some colorschemes ,autocolor will not work,like 'desert','ir_black'.
-                autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd guibg=#212121 ctermbg=3
+                autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#212121 ctermbg=3
                 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#404040 ctermbg=4
                 set ts=4 sw=4 et
                 let g:indent_guides_start_level           = 2
@@ -108,9 +107,9 @@
             " }
             " Rainbow Parens {
                 au VimEnter * RainbowParenthesesToggle
-                au Syntax * RainbowParenthesesLoadRound
-                au Syntax * RainbowParenthesesLoadSquare
-                au Syntax * RainbowParenthesesLoadBraces
+                au Syntax   * RainbowParenthesesLoadRound
+                au Syntax   * RainbowParenthesesLoadSquare
+                au Syntax   * RainbowParenthesesLoadBraces
             " }
         endif
         " }
@@ -165,12 +164,12 @@
             inoremap <expr><C-y> neocomplcache#close_popup()
 
         " Enable omni completion.
-            autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+            autocmd FileType css           setlocal omnifunc=csscomplete#CompleteCSS
             autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-            autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-            autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-            autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-            autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+            autocmd FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
+            autocmd FileType python        setlocal omnifunc=pythoncomplete#Complete
+            autocmd FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
+            autocmd FileType ruby          setlocal omnifunc=rubycomplete#Complete
 
         " Enable heavy omni completion.
             if !exists('g:neocomplcache_omni_patterns')
@@ -192,23 +191,23 @@
         if count(g:addon_groups, 'utility')
             call vam#ActivateAddons(['Tabular'])            " pretty up your alignment
             " Tabularize shortcuts {
-                nmap <leader>a= :Tabularize /=<CR>
-                vmap <Leader>a= :Tabularize /=<CR>
-                nmap <Leader>a: :Tabularize /:<CR>
-                vmap <Leader>a: :Tabularize /:<CR>
-                nmap <Leader>a:: :Tabularize /:\zs<CR>
-                vmap <Leader>a:: :Tabularize /:\zs<CR>
-                nmap <Leader>a, :Tabularize /,<CR>
-                vmap <Leader>a, :Tabularize /,<CR>
+                nmap <leader>a=     :Tabularize /=<CR>
+                vmap <Leader>a=     :Tabularize /=<CR>
+                nmap <Leader>a:     :Tabularize /:<CR>
+                vmap <Leader>a:     :Tabularize /:<CR>
+                nmap <Leader>a::    :Tabularize /:\zs<CR>
+                vmap <Leader>a::    :Tabularize /:\zs<CR>
+                nmap <Leader>a,     :Tabularize /,<CR>
+                vmap <Leader>a,     :Tabularize /,<CR>
                 nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
                 vmap <Leader>a<Bar> :Tabularize /<Bar><CR> <Leader>a= :Tabularize /=<CR>
-                vmap <Leader>a= :Tabularize /=<CR>
-                nmap <Leader>a: :Tabularize /:<CR>
-                vmap <Leader>a: :Tabularize /:<CR>
-                nmap <Leader>a:: :Tabularize /:\zs<CR>
-                vmap <Leader>a:: :Tabularize /:\zs<CR>
-                nmap <Leader>a, :Tabularize /,<CR>
-                vmap <Leader>a, :Tabularize /,<CR>
+                vmap <Leader>a=     :Tabularize /=<CR>
+                nmap <Leader>a:     :Tabularize /:<CR>
+                vmap <Leader>a:     :Tabularize /:<CR>
+                nmap <Leader>a::    :Tabularize /:\zs<CR>
+                vmap <Leader>a::    :Tabularize /:\zs<CR>
+                nmap <Leader>a,     :Tabularize /,<CR>
+                vmap <Leader>a,     :Tabularize /,<CR>
                 nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
                 vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
             " }
@@ -252,10 +251,10 @@
 
     " Haskell addons {
         if count(g:addon_groups, 'haskell')
-            call vam#ActivateAddons(['github:dag/vim2hs'])          " lots of neat conveniences https://github.com/dag/vim2hs
-            call vam#ActivateAddons(['ghcmod']) " as if you need any more than this
-            call vam#ActivateAddons(['neco-ghc'])                   " completion through ghc-mod
-            " call vam#ActivateAddons(['github:bitc/lushtags'])       " this pulls the whole repo, including Haskell sources
+            call vam#ActivateAddons(['github:dag/vim2hs'])      " lots of neat conveniences https://github.com/dag/vim2hs
+            call vam#ActivateAddons(['ghcmod'])                 " as if you need any more than this
+            call vam#ActivateAddons(['neco-ghc'])               " completion through ghc-mod
+            " call vam#ActivateAddons(['github:bitc/lushtags']) " this pulls the whole repo, including Haskell sources
             autocmd BufWritePost *.hs GhcModCheckAndLintAsync
             let g:haskell_conceal_wide = 1
             let g:haskell_conceal_bad = 1
@@ -269,14 +268,14 @@
             " of these groups into separate files to contain the configuration
             " stuff
             let g:LatexBox_output_type = "pdf"
-            let g:LatexBox_autojump = 1 
-            let g:tex_flavor='latex'
+            let g:LatexBox_autojump    = 1
+            let g:tex_flavor           = 'latex'
         endif
     " }"
 
     " Javascript Addons {
         if count(g:addon_groups, 'js')
-            call vam#ActivateAddons(['JSON'])                           " might move this to general programming; JSON is becoming more common
+            call vam#ActivateAddons(['JSON'])           " might move this to general programming; JSON is becoming more common
             call vam#ActivateAddons(['vim-javascript']) " best I've been able to find
         " JSON {
             nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
@@ -287,9 +286,9 @@
 
     " HTML Addons {
         if count(g:addon_groups, 'html')
-            call vam#ActivateAddons(['html5'])                         " supports all that WAI-ARIA goodness
-            call vam#ActivateAddons(['HTML_AutoCloseTag'])             " testing; might remove later
-            call vam#ActivateAddons(['vim-css3-syntax']) " had good experiences with this one; still looking at options
+            call vam#ActivateAddons(['html5'])             " supports all that WAI-ARIA goodness
+            call vam#ActivateAddons(['HTML_AutoCloseTag']) " testing; might remove later
+            call vam#ActivateAddons(['vim-css3-syntax'])   " had good experiences with this one; still looking at options
         " AutoCloseTag {
             " Make it so AutoCloseTag works for xml and xhtml files as well
         au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
@@ -300,11 +299,11 @@
 
     " Ruby Addons {
         if count(g:addon_groups, 'ruby')
-            call vam#ActivateAddons(['vim-ruby'])      " I'll get to Ruby eventually, I promise
-            call vam#ActivateAddons(['rails'])      " I'll get to Ruby eventually, I promise
-            let g:rubycomplete_buffer_loading = 1
+            call vam#ActivateAddons(['vim-ruby']) " I'll get to Ruby eventually, I promise
+            call vam#ActivateAddons(['rails'])    " tpope know everything
+            let g:rubycomplete_buffer_loading    = 1
             let g:rubycomplete_classes_in_global = 1
-            let g:rubycomplete_rails = 1
+            let g:rubycomplete_rails             = 1
         endif
     " }
 
@@ -331,7 +330,7 @@
             call vam#ActivateAddons(['PIV'])        " all you need, and the only decent way to work with PHP
         endif
         let g:DisableAutoPHPFolding = 0
-        let g:PIVAutoClose = 0
+        let g:PIVAutoClose          = 0
     " }
 
     " Haml {

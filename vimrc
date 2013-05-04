@@ -56,12 +56,12 @@
         endif
 "}
 " General settings {
-    let mapleader=','          " do people really use \?
-    set background=dark        " Because dark backgrounds are nice
-    set t_Co=256               " The colors, Duke, the colors!
+    let mapleader=','         " do people really use \?
+    set background=dark       " Because dark backgrounds are nice
+    set t_Co=256              " The colors, Duke, the colors!
 
-    filetype indent plugin on   " filetypes are nice
-    syntax on                   " highlighting is nicer
+    filetype indent plugin on " filetypes are nice
+    syntax on                 " highlighting is nicer
     scriptencoding utf-8
     " uncomment the following lines to admit your weakness
     " set mouse=a               " automatically enable mouse usage
@@ -70,16 +70,16 @@
     " Automatically change directory when opening a new buffer
     autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
 
-    set shortmess+=filmnrxoOtT  " abbreviates messages because 'Hit enter' is dumb
+    set shortmess+=filmnrxoOtT                      " abbreviates messages because 'Hit enter' is dumb
     set viewoptions=folds,options,cursor,unix,slash " more compat stuff
-    set virtualedit=onemore     " allow cursor beyond last character
-    set history=1000            " Bigger is better
-    set spell                   " spell checking
-    set hidden                  " don't unload file when buffer is abandoned
+    set virtualedit=onemore                         " allow cursor beyond last character
+    set history=1000                                " Bigger is better
+    set spell                                       " spell checking
+    set hidden                                      " don't unload file when buffer is abandoned
 
     " Backups and undofile {
         set nobackup              " First, backups are mostly just annoying
-        set nowritebackup           " Second, I use CodeKit
+        set nowritebackup         " Second, I use CodeKit
         set noswapfile
         if has('persistent_undo')
             set undofile          " As long as we're backing up, we can also
@@ -114,14 +114,14 @@
     set cursorline              " highlight current line
     " changes the insert cursor to a pipe rather than a block
     if !has("gui_running")
-    	let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-    	let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+        let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+        let &t_SI = "\<Esc>]50;CursorShape=1\x7"
     endif
 
     if has('cmdline_info')
-        set ruler               " helpful at times; may remove later, though
+        set ruler                                          " helpful at times; may remove later, though
         set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " crazy ruler
-        set showcmd             " show partial commands, etc.
+        set showcmd                                        " show partial commands, etc.
     endif
     set backspace=indent,eol,start  " sane backspacing
     set linespace=0                 " no weird line spacing
@@ -213,9 +213,9 @@
                     \endif
     endif
 
-    hi Pmenu guifg=#000000 guibg=#F8F8F8 ctermfg=black ctermbg=Lightgray
-    hi PmenuSbar guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
-    hi PmenuThumb guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
+    hi Pmenu      guifg=#000000 guibg=#F8F8F8          ctermfg=black     ctermbg=Lightgray
+    hi PmenuSbar  guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan  ctermbg=lightgray cterm=NONE
+    hi PmenuThumb guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan  cterm=NONE
 
     " some convenient mappings
     inoremap <expr> <CR>    pumvisible() ? "\<C-y>" : "\<CR>"
@@ -237,12 +237,12 @@
 " Functions {
     function! InitializeDirectories()
         let separator = "."
-        let parent = $HOME
-        let prefix = '.vim'
-        let dir_list = {
-                    \ 'backup': 'backupdir',
-                    \ 'views': 'viewdir',
-                    \ 'swap': 'directory' }
+        let parent    = $HOME
+        let prefix    = '.vim'
+        let dir_list  = {
+                    \ 'backup' : 'backupdir',
+                    \ 'views'  : 'viewdir',
+                    \ 'swap'   : 'directory' }
 
         if has('persistent_undo')
             let dir_list['undo'] = 'undodir'
