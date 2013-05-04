@@ -35,12 +35,6 @@
         nnoremap <silent> <leader>gl :Glog<CR>
         nnoremap <silent> <leader>gp :Git push<CR>
     " }
-    " Solarized {
-        if !has('gui_running') " Make terminal vim not quite so ugly under Solarized
-            let g:solarized_termtrans=1
-            let g:solarized_termcolors=256
-        endif
-    " }
 " }
 
 " Optional Addon Groups {
@@ -62,7 +56,6 @@
             call vam#ActivateAddons(['matchit.zip'])                " make % cool
             call vam#ActivateAddons(['powerline'])              " Powerline is where it's at
             call vam#ActivateAddons(['EasyMotion'])                 " make motion commands sexy again
-            call vam#ActivateAddons(['CSApprox'])                   " if for some reason Zenburn is not to your taste
             call vam#ActivateAddons(['undotree'])                   " it's practically magic
             call vam#ActivateAddons(['github:myusuf3/numbers.vim']) " never count lines again!
             call vam#ActivateAddons(['Indent_Guides'])              " don't count your tabs, either
