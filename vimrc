@@ -112,6 +112,7 @@
     set tabpagemax=15           " a reasonable maximum number of tabs to show
     set showmode                " show current mode
     set cursorline              " highlight current line
+    set guioptions-=r           " Turn off the right scrollbar
     " changes the insert cursor to a pipe rather than a block
     if !has("gui_running")
         let &t_EI = "\<Esc>]50;CursorShape=0\x7"
@@ -161,6 +162,8 @@
     " Wrapped lines goes down/up to next row, rather than next line in file.
     nnoremap j gj
     nnoremap k gk
+    " Save some shifting
+    nnoremap ; :
 
     if has('user_commands') " some useful shifted commands
         command! -bang -nargs=* -complete=file E e<bang> <args>
