@@ -189,7 +189,10 @@
 
     " Utility addons {
         if count(g:addon_groups, 'utility')
-            call vam#ActivateAddons(['Tabular'])            " pretty up your alignment
+            call vam#ActivateAddons(['eunuch'])  " SudoWrite, Chmod, and other nice stuff
+            call vam#ActivateAddons(['notes'])   " A really nice looking note-taking and todo list plugin
+            let g:notes_directory = '~/.notes'   " Probably going to version this, if I'm clever
+            call vam#ActivateAddons(['Tabular']) " pretty up your alignment
             " Tabularize shortcuts {
                 nmap <leader>a=     :Tabularize /=<CR>
                 vmap <Leader>a=     :Tabularize /=<CR>
@@ -216,10 +219,10 @@
 
     " Programming addons {
         if count(g:addon_groups, 'programming')
-            call vam#ActivateAddons(['Syntastic'])          " Nice syntax checking for just about everything
+            call vam#ActivateAddons(['Syntastic'])  " Nice syntax checking for just about everything
             call vam#ActivateAddons(['WebAPI'])
-            call vam#ActivateAddons(['Gist'])               " TODO: Depends on WebAPI. Make sure this is reflected in the package description
-            call vam#ActivateAddons(['The_NERD_Commenter']) " useful commenting
+            call vam#ActivateAddons(['Gist'])       " TODO: Depends on WebAPI. Make sure this is reflected in the package description
+            call vam#ActivateAddons(['commentary']) " comments with the tpope seal of approval
             if executable('ctags')
                 call vam#ActivateAddons(['Tagbar'])
         " TagBar {
@@ -256,6 +259,7 @@
             call vam#ActivateAddons(['neco-ghc'])               " completion through ghc-mod
             " call vam#ActivateAddons(['github:bitc/lushtags']) " this pulls the whole repo, including Haskell sources
             autocmd BufWritePost *.hs GhcModCheckAndLintAsync
+            nnoremap <silent> <leader>j :GhcModTypeInsert<CR>
             let g:haskell_conceal_wide = 1
             let g:haskell_conceal_bad = 1
         endif
