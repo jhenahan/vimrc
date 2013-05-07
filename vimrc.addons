@@ -185,11 +185,14 @@
 
     " Utility addons {
         if count(g:addon_groups, 'utility')
-            call vam#ActivateAddons(['powerline'])                  " Powerline is where it's at
-            call vam#ActivateAddons(['eunuch'])  " SudoWrite, Chmod, and other nice stuff
-            call vam#ActivateAddons(['notes'])   " A really nice looking note-taking and todo list plugin
-            let g:notes_directory = '~/.notes'   " Probably going to version this, if I'm clever
-            call vam#ActivateAddons(['Tabular']) " pretty up your alignment
+            call vam#ActivateAddons(['powerline']) " Powerline is where it's at
+            call vam#ActivateAddons(['eunuch'])    " SudoWrite, Chmod, and other nice stuff
+            call vam#ActivateAddons(['repeat'])    " At this rate, half of my config will be tpope plugins
+            call vam#ActivateAddons(['notes'])     " A really nice looking note-taking and todo list plugin
+            let g:notes_directory = '~/.notes'     " Probably going to version this, if I'm clever
+            call vam#ActivateAddons(['Tabular'])   " pretty up your alignment
+            call vam#ActivateAddons(['abolish'])   " Testing for now
+            call vam#ActivateAddons(['characterize']) " Modernizes ga to add more character info
             " Powerline {
                 setlocal laststatus=2
             " }
