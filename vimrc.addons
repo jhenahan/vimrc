@@ -54,7 +54,6 @@
             call vam#ActivateAddons(['ctrlp'])                      " preferable to Ctrl-T -- might be ditching this in the future
             call vam#ActivateAddons(['ctrlp-modified'])             " not sure what this does, but we'll see
             call vam#ActivateAddons(['matchit.zip'])                " make % cool
-            call vam#ActivateAddons(['powerline'])                  " Powerline is where it's at
             call vam#ActivateAddons(['EasyMotion'])                 " make motion commands sexy again
             call vam#ActivateAddons(['undotree'])                   " it's practically magic
             call vam#ActivateAddons(['github:myusuf3/numbers.vim']) " never count lines again!
@@ -101,9 +100,6 @@
                 let g:indent_guides_start_level           = 2
                 let g:indent_guides_guide_size            = 1
                 let g:indent_guides_enable_on_vim_startup = 1
-            " }
-            " Powerline {
-                setlocal laststatus=2
             " }
             " Rainbow Parens {
                 au VimEnter * RainbowParenthesesToggle
@@ -189,10 +185,14 @@
 
     " Utility addons {
         if count(g:addon_groups, 'utility')
+            call vam#ActivateAddons(['powerline'])                  " Powerline is where it's at
             call vam#ActivateAddons(['eunuch'])  " SudoWrite, Chmod, and other nice stuff
             call vam#ActivateAddons(['notes'])   " A really nice looking note-taking and todo list plugin
             let g:notes_directory = '~/.notes'   " Probably going to version this, if I'm clever
             call vam#ActivateAddons(['Tabular']) " pretty up your alignment
+            " Powerline {
+                setlocal laststatus=2
+            " }
             " Tabularize shortcuts {
                 nmap <leader>a=     :Tabularize /=<CR>
                 vmap <Leader>a=     :Tabularize /=<CR>
