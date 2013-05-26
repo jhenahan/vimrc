@@ -32,13 +32,8 @@
     " Compat and clipboards {
     set nocompatible " must be first line
 
-    if has ("unix") && "Darwin" != system("echo -n \"$(uname)\"")
-        " on Linux use + register for copy-paste
-        set clipboard=unnamedplus
-    else
-        " on mac and windows, use * register for copy-paste
-        set clipboard=unnamed
-    endif
+    " on mac and windows, use * register for copy-paste
+    set clipboard=unnamed
     " }
 
     " Win Compat (for those dark times) {
@@ -206,6 +201,8 @@
     " Neat little thing. <leader>ff displays a list of occurrences of the word under point and
     " asks which to jump to
     nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
+
+    nnoremap <Leader>m :make<CR>
 " }
 
 " Omnicomplete {
