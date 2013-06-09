@@ -181,11 +181,18 @@
             call vam#ActivateAddons(['characterize']) " Modernizes ga to add more character info
             call vam#ActivateAddons(['vimproc'])            " run processes within vim
             call vam#ActivateAddons(['unite'])
+            call vam#ActivateAddons(['vim-misc'])
+            call vam#ActivateAddons(['notes'])
             " Unite {
                 nnoremap <C-p> :Unite file_rec/async<cr>
                 nnoremap <space>/ :Unite grep:.<cr>
                 nnoremap <space>y :Unite history/yanks<cr>
                 nnoremap <space>s :Unite -quick-match buffer<cr>
+            " }
+            " Notes {
+                let g:notes_directories = ['~/Documents/Notes', '~/Dropbox/Shared Notes']
+                let g:notes_suffix = '.note'
+                let g:notes_list_bullets = ['•', '◦', '▸', '▹', '▪', '▫']
             " }
             " Powerline {
                 setlocal laststatus=2
