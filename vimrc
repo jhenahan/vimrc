@@ -32,8 +32,16 @@
     " Compat and clipboards {
     set nocompatible " must be first line
 
-    " on mac and windows, use * register for copy-paste
-    set clipboard=unnamed
+    if $SHELL =~ 'bin/fish'
+        set shell=/usr/local/bin/zsh
+    endif
+    if has ("unix") && "Darwin" != system("echo -n \"$(uname)\"")
+        " on Linux use + register for copy-paste
+        set clipboard=unnamedplus
+    else
+        " on mac and windows, use * register for copy-paste
+        set clipboard=unnamed
+    endif
     " }
 
     " Win Compat (for those dark times) {
