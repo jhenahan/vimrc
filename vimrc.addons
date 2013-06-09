@@ -51,17 +51,13 @@
             call vam#ActivateAddons(['The_NERD_tree'])              " popular, though I don't use it much
             call vam#ActivateAddons(['surround'])                   " very convenient
             call vam#ActivateAddons(['delimitMate'])                " A little nicer than AutoClose
-            call vam#ActivateAddons(['ctrlp'])                      " preferable to Ctrl-T -- might be ditching this in the future
-            call vam#ActivateAddons(['ctrlp-modified'])             " not sure what this does, but we'll see
             call vam#ActivateAddons(['matchit.zip'])                " make % cool
             call vam#ActivateAddons(['EasyMotion'])                 " make motion commands sexy again
             call vam#ActivateAddons(['undotree'])                   " it's practically magic
             call vam#ActivateAddons(['github:myusuf3/numbers.vim']) " never count lines again!
             call vam#ActivateAddons(['Indent_Guides'])              " don't count your tabs, either
             call vam#ActivateAddons(['restore_view'])               " save some lines and get a nice view restorer
-            call vam#ActivateAddons(['abolish'])                    " save your hands from the evils of English
             call vam#ActivateAddons(['rainbow_parentheses'])        " stray parens begone!
-            call vam#ActivateAddons(['LustyExplorer'])              " Looks like a cooler version of BufExplorer
             let g:NERDShutUp=1
             let b:match_ignorecase = 1
 
@@ -78,14 +74,6 @@
                 let NERDTreeShowHidden                  = 1
                 let NERDTreeKeepTreeInNewTab            = 1
                 let g:nerdtree_tabs_open_on_gui_startup = 0
-            " }
-            " ctrlp {
-                let g:ctrlp_working_path_mode = 2
-                nnoremap <silent> <D-t> :CtrlP<CR>
-                nnoremap <silent> <D-r> :CtrlPMRU<CR>
-                let g:ctrlp_custom_ignore = {
-                            \ 'dir': '\.git$\|\.hg$\|\.svn$',
-                            \ 'file': '\.exe$\|\.so$\|\.dll$' }
             " }
             " UndoTree {
                 nnoremap <Leader>u :UndotreeToggle<CR>
@@ -188,11 +176,17 @@
             call vam#ActivateAddons(['powerline']) " Powerline is where it's at
             call vam#ActivateAddons(['eunuch'])    " SudoWrite, Chmod, and other nice stuff
             call vam#ActivateAddons(['repeat'])    " At this rate, half of my config will be tpope plugins
-            call vam#ActivateAddons(['notes'])     " A really nice looking note-taking and todo list plugin
-            let g:notes_directories = ['~/.notes'] " Probably going to version this, if I'm clever
             call vam#ActivateAddons(['Tabular'])   " pretty up your alignment
             call vam#ActivateAddons(['abolish'])   " Testing for now
             call vam#ActivateAddons(['characterize']) " Modernizes ga to add more character info
+            call vam#ActivateAddons(['vimproc'])            " run processes within vim
+            call vam#ActivateAddons(['unite'])
+            " Unite {
+                nnoremap <C-p> :Unite file_rec/async<cr>
+                nnoremap <space>/ :Unite grep:.<cr>
+                nnoremap <space>y :Unite history/yanks<cr>
+                nnoremap <space>s :Unite -quick-match buffer<cr>
+            " }
             " Powerline {
                 setlocal laststatus=2
             " }
@@ -238,7 +232,6 @@
             if has('python') || has('python3')
                 call vam#ActivateAddons(['Conque_Shell'])   " for when you absolutely, positively, must have a terminal in vim
             endif
-            call vam#ActivateAddons(['vimproc'])            " run processes within vim
 
             " Strip whitespace {
             fun! StripWhitespace()
